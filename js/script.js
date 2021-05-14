@@ -18,37 +18,21 @@ window.onload = function () {
     .addEventListener("change", filterByPrice);
 
   document.querySelector(".btn-check").onclick = function checkout() {
-    const modal = document.createElement("div");
-    modal.className = "open";
-    modal.style.cssText =
-      "display: block; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); z-index: 1000;";
-    const wrapper = document.createElement("div");
-    wrapper.style.cssText =
-      "border-radius: 5px; background-color: #fefefe; margin: 15% auto; max-width: 500px; padding: 50px 80px; border: 1px solid #888; z-index: 99999;";
-    const form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("onsubmit", "alert('Благодарим Вас за покупки!')");
-    const name = document.createElement("input");
-    name.setAttribute("type", "text");
-    name.required = true;
-    name.style.cssText =
-      "width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; font-size: 20px";
-    name.setAttribute("placeholder", "Имя");
-    const email = document.createElement("input");
-    email.setAttribute("type", "text");
-    email.required = true;
-    email.style.cssText =
-      "width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; font-size: 20px";
-    email.setAttribute("placeholder", "e-mail");
-    const button = document.createElement("button");
-    button.setAttribute("type", "submit");
-    button.style.cssText =
-      "padding: 6px 14px; margin-top: 8px; box-sizing: border-box;";
-    const text = document.createTextNode("Отправить");
-    button.appendChild(text);
-    form.append(name, email, button);
-    wrapper.append(form);
-    modal.append(wrapper);
+    const modal = document.createElement("span");
+    modal.insertAdjacentHTML(
+      "afterbegin",
+      `
+    <div class="open" style="display: block; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6); z-index: 1000;">
+      <div style="border-radius: 5px; background-color: rgb(254, 254, 254); margin: 15% auto; max-width: 500px; padding: 50px 80px; border: 1px solid rgb(136, 136, 136); z-index: 99999;">
+        <form method="post" onsubmit="alert('Благодарим Вас за покупки!')">
+          <input type="text" required="" placeholder="Имя" style="width: 100%; padding: 12px 20px; margin: 8px 0px; box-sizing: border-box; font-size: 20px;">
+          <input type="text" required="" placeholder="e-mail" style="width: 100%; padding: 12px 20px; margin: 8px 0px; box-sizing: border-box; font-size: 20px;">
+          <button type="submit" style="padding: 6px 14px; margin-top: 8px; box-sizing: border-box;">Отправить</button>
+        </form>
+      </div>
+    </div>
+    `
+    );
     document.body.appendChild(modal);
     modal.onclick = (e) => {
       if (e.target.classList.contains("open")) {
