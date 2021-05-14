@@ -92,6 +92,30 @@ window.onload = function () {
     document.getElementById("sum").innerHTML = sum;
   }
 
+  function filterCategoryHelper(iter, elem, val, type, arr) {
+    return () => {
+      if (elem[iter].selected && elem[iter].value === val) {
+        arr.map((item) => {
+          return item.dataset.category != type
+            ? (item.style.display = "none")
+            : (item.style.display = "block");
+        });
+      }
+    };
+  }
+
+  function filterPriceHelper(iter, elem, val, type, arr) {
+    return () => {
+      if (elem[iter].selected && elem[iter].value === val) {
+        arr.map((item) => {
+          return +item.dataset.price < type
+            ? (item.style.display = "block")
+            : (item.style.display = "none");
+        });
+      }
+    };
+  }
+
   function filterByCategory() {
     let select = document
       .getElementById("dishes-select")
@@ -101,27 +125,9 @@ window.onload = function () {
       if (select[i].selected && select[i].value === "0") {
         [...items].map((item) => (item.style.display = "block"));
       }
-      if (select[i].selected && select[i].value === "1") {
-        [...items].map((item) => {
-          return item.dataset.category != "breakfast"
-            ? (item.style.display = "none")
-            : (item.style.display = "block");
-        });
-      }
-      if (select[i].selected && select[i].value === "2") {
-        [...items].map((item) => {
-          return item.dataset.category != "starters"
-            ? (item.style.display = "none")
-            : (item.style.display = "block");
-        });
-      }
-      if (select[i].selected && select[i].value === "3") {
-        [...items].map((item) => {
-          return item.dataset.category != "sides"
-            ? (item.style.display = "none")
-            : (item.style.display = "block");
-        });
-      }
+      filterCategoryHelper(i, select, "1", "breakfast", [...items])();
+      filterCategoryHelper(i, select, "2", "starters", [...items])();
+      filterCategoryHelper(i, select, "3", "sides", [...items])();
     }
   }
 
@@ -134,34 +140,10 @@ window.onload = function () {
       if (select[i].selected && select[i].value === "0") {
         [...items].map((item) => (item.style.display = "block"));
       }
-      if (select[i].selected && select[i].value === "30") {
-        [...items].map((item) => {
-          return +item.dataset.price < 30
-            ? (item.style.display = "block")
-            : (item.style.display = "none");
-        });
-      }
-      if (select[i].selected && select[i].value === "50") {
-        [...items].map((item) => {
-          return +item.dataset.price < 50
-            ? (item.style.display = "block")
-            : (item.style.display = "none");
-        });
-      }
-      if (select[i].selected && select[i].value === "100") {
-        [...items].map((item) => {
-          return +item.dataset.price < 100
-            ? (item.style.display = "block")
-            : (item.style.display = "none");
-        });
-      }
-      if (select[i].selected && select[i].value === "150") {
-        [...items].map((item) => {
-          return +item.dataset.price < 150
-            ? (item.style.display = "block")
-            : (item.style.display = "none");
-        });
-      }
+      filterPriceHelper(i, select, "30", 30, [...items])();
+      filterPriceHelper(i, select, "50", 50, [...items])();
+      filterPriceHelper(i, select, "100", 100, [...items])();
+      filterPriceHelper(i, select, "150", 150, [...items])();
     }
   }
 };
